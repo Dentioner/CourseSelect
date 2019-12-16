@@ -1,4 +1,4 @@
- module CourseHelper
+ module CoursesHelper
   def week_transform(date)
     if date.include? "周一"
       return '1'
@@ -16,6 +16,7 @@
       return '7'
     else
       return '0'
+    end
   end
 
   def get_time(course, c_time)
@@ -30,7 +31,7 @@
     c_type == '' or course['course_type'] == c_type
   end
 
-  def get_course_array(course, c_type)
-    course.map {|course| course[c_type]} .sort.uniq
+  def get_course_array(courses, c_type)
+    courses.map {|course| course[c_type]} .sort.uniq
   end
 end

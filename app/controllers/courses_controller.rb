@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  include CourseHelper
+  include CoursesHelper
 
   before_action :student_logged_in, only: [:select, :quit, :list]
   before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update, :open, :close]#add open by qiao
@@ -61,7 +61,7 @@ class CoursesController < ApplicationController
 
   def list
     #-------QiaoCode--------
-    @courses = Course.where(:open=>true).paginate(page: params[:page], per_page: 4)
+    @courses = Course.where(:open=>true)#.paginate(page: params[:page], per_page: 4)
     @course = @courses-current_user.courses
 =begin    
     tmp=[]
@@ -80,7 +80,7 @@ class CoursesController < ApplicationController
       get_type(course, params['course']['course_type']) and
       get_name(course, params['keyword'])
     } if request.post?
-#    @course = @course.paginate(page: params[:page], per_page: 4)
+    @course = @course.paginate(page: params[:page], per_page: 4)
   end
 
 
