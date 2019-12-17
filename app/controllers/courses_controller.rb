@@ -61,7 +61,8 @@ class CoursesController < ApplicationController
 
   def list
     #-------QiaoCode--------
-    @courses = Course.where(:open=>true)#.paginate(page: params[:page], per_page: 4)
+#    byebug
+    @courses = Course.where(:open=>true).paginate(page: params[:page], per_page: 4)
     @course = @courses-current_user.courses
 =begin    
     tmp=[]
