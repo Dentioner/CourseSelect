@@ -11,7 +11,7 @@
         </div>
         <div class="panel-body" style="min-height: 450px">
         
-          <%= form_tag("/search", method: :post) do %>
+          <%= form_tag list_courses_path 1, method: :post do %>
             <div class="form-group form-inline">
               <label for="course[course_time]">上课时间</label>
               <select name="course[course_time]">
@@ -36,9 +36,9 @@
                 <option value="公共选修课">公共选修课</option>          
               </select>
             
-              <%= label_tag(:q, "课程名称") %>
-              <%= text_field_tag(:q) %>
-              <%= submit_tag("查询") %>
+              <label for="keyword">课程名称</label>
+              <%= text_field_tag(:keyword) %>
+              <button type="submit" id="query" class="btn btn-primary">查询</button>
            
 
             </div>

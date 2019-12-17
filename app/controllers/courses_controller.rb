@@ -62,7 +62,7 @@ class CoursesController < ApplicationController
   def list
     #-------QiaoCode--------
 #    byebug
-    @courses = Course.where(:open=>true).paginate(page: params[:page], per_page: 4)
+    @courses = Course.where(:open=>true)#.paginate(page: params[:page], per_page: 4)
     @course = @courses-current_user.courses
 =begin    
     tmp=[]
@@ -81,7 +81,7 @@ class CoursesController < ApplicationController
       get_type(course, params['course']['course_type']) and
       get_name(course, params['keyword'])
     } if request.post?
-    @course = @course.paginate(page: params[:page], per_page: 4)
+    @course = @course.paginate(page: params[:page], per_page: 20)
   end
 
 
@@ -103,8 +103,8 @@ class CoursesController < ApplicationController
   #-------------------------for both teachers and students----------------------
 
   def index
-    @course=current_user.teaching_courses.paginate(page: params[:page], per_page: 4) if teacher_logged_in?
-    @course=current_user.courses.paginate(page: params[:page], per_page: 4) if student_logged_in?
+    @course=current_user.teaching_courses.paginate(page: params[:page], per_page: 20) if teacher_logged_in?
+    @course=current_user.courses.paginate(page: params[:page], per_page: 20) if student_logged_in?
   end
 
 
