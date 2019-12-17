@@ -36,10 +36,11 @@
                 <option value="公共选修课">公共选修课</option>          
               </select>
             
-              <label for="keyword">课程名称</label>
+
+
+              <%= label_tag(:keyword, "课程名称") %>
               <%= text_field_tag(:keyword) %>
-              <button type="submit" id="query" class="btn btn-primary">查询</button>
-           
+              <%= submit_tag("查询") %>
 
             </div>
           <% end %>

@@ -24,7 +24,7 @@
   end
 
   def get_name(course, c_name)
-    (c_name == '') or (course['name'].include? c_name) or (c_name.nil?)
+    (c_name.nil?) or (c_name == '') or (course['name'].include? c_name)
   end
 
   def get_type(course, c_type)
