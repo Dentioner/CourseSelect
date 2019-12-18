@@ -63,7 +63,7 @@ class CoursesController < ApplicationController
     #-------QiaoCode--------
 #    byebug
     @courses = Course.where(:open=>true)#.paginate(page: params[:page], per_page: 4)
-    @course = @courses-current_user.courses
+    @valid_course = @courses-current_user.courses
 =begin    
     tmp=[]
     @course.each do |course|
@@ -74,14 +74,14 @@ class CoursesController < ApplicationController
     @course=tmp
 =end  
 
-    @course_type = get_course_array(@course, 'course_type')
-    @course.select! {|course| course.open}
-    @course.select! {|course|
+    @course_type = get_course_array(@valid_course, 'course_type')
+    @valid_course.select! {|course| course.open}
+    @valid_course.select! {|course|
       get_time(course, params['course']['course_time']) and
       get_type(course, params['course']['course_type']) and
       get_name(course, params['keyword'])
     } if request.post?
-    @course = @course.paginate(page: params[:page], per_page: 20)
+    @valid_course = @valid_course.paginate(page: params[:page], per_page: 20)
   end
 
 

@@ -66,7 +66,7 @@
             </thead>
             <tbody>
 
-            <% @course.each do |course| %>
+            <% @valid_course.each do |course| %>
                 <tr>
 
                   <td><%= course.course_code %></td>
@@ -85,7 +85,7 @@
             <% end %>
             </tbody>
           </table>
-          <%= will_paginate @course %>
+          <%= will_paginate @valid_course %>
         </div>
       </div>
     </div>
