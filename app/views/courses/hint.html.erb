@@ -47,24 +47,28 @@
                   <% total_selected_grade += selected_grade %>
                 <% end %>
                 <td> <%= total_selected_grade %> </td>
-              <tr>
+              </tr>
+
+
+    
 
 
               <tr>
                 <td>获得学分</td>
-                <% total_getted_grade = 0 %>
+                <% total_grade = 0 %>
                 <% types.each do |type| %>
-                  <% getted_grade = 0 %>
-                  <% @courses.each do |course| %>
-                    <% if course.course_type == type %>
-                      <% getted_grade += course.grades.split("/")[1].to_f %>
+                  <% grade = 0 %>
+                  <% current_user.grades.each do |g| %>
+                    <% if g.course.course_type == type && g.grade != nil %>
+                      <% grade += g.grade %>
                     <% end %>
                   <% end %>
-                  <td> <%= getted_grade %> </td>
-                  <% total_getted_grade += getted_grade %>
+                  <td> <%= grade %> </td>
+                  <% total_grade += grade %>
                 <% end %>
-                <td> <%= total_getted_grade %> </td>
-              <tr>
+                <td> <%= total_grade %> </td>
+              </tr>
+
             </tbody>
 
 
