@@ -84,6 +84,9 @@ class CoursesController < ApplicationController
     @valid_course = @valid_course.paginate(page: params[:page], per_page: 20)
   end
 
+  def hint
+    @courses = current_user.courses
+  end
 
   def select
     @course=Course.find_by_id(params[:id])
@@ -135,6 +138,10 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:course_code, :name, :course_type, :teaching_type, :exam_type,
                                    :credit, :limit_num, :class_room, :course_time, :course_week)
   end
+
+
+
+
 
 
 end
