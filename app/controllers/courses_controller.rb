@@ -87,6 +87,10 @@ class CoursesController < ApplicationController
     end
   end 
 
+  def hint
+    @courses = current_user.courses
+  end
+
 
   def select
     @course=Course.find_by_id(params[:id])
