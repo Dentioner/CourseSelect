@@ -60,10 +60,25 @@ class CoursesController < ApplicationController
   #-------------------------for students----------------------
 
   def list
+
+    excluded_courses_id = [-1]
+    current_user.courses.each do |course|
+      excluded_courses_id << course.id
+    end
+    @courses = Course.where("open = ? and id not in (?)", true, excluded_courses_id).paginate(page: params[:page], per_page: 4)
+
+    if params.has_key?(:course_time)
+      ctime = params[:course_time]
+      ctype = params[:course_type]
+      cname = params[:course_name]
+      if ctime != "不限" and ctype != "不限" and cname != ""
+        @courses = Course.where("open = ? and  course_time like ? and course_type = ? and name like ? and id not in (?)", true, "%#{ctime}%", ctype, "%#{cname}%", excluded_courses_id).paginate(page: params[:page], per_page: 4)
+      end
+      
+    end
     #-------QiaoCode--------
 #    byebug
-    @courses = Course.where(:open=>true)#.paginate(page: params[:page], per_page: 4)
-    @course = @courses-current_user.courses
+   
 =begin    
     tmp=[]
     @course.each do |course|
@@ -74,15 +89,7 @@ class CoursesController < ApplicationController
     @course=tmp
 =end  
 
-    @course_type = get_course_array(@course, 'course_type')
-    @course.select! {|course| course.open}
-    @course.select! {|course|
-      get_time(course, params['course']['course_time']) and
-      get_type(course, params['course']['course_type']) and
-      get_name(course, params['keyword'])
-    } if request.post?
-    @course = @course.paginate(page: params[:page], per_page: 20)
-  end
+   end
 
 
   def select
@@ -103,8 +110,8 @@ class CoursesController < ApplicationController
   #-------------------------for both teachers and students----------------------
 
   def index
-    @course=current_user.teaching_courses.paginate(page: params[:page], per_page: 20) if teacher_logged_in?
-    @course=current_user.courses.paginate(page: params[:page], per_page: 20) if student_logged_in?
+    @course=current_user.teaching_courses.paginate(page: params[:page], per_page: 4) if teacher_logged_in?
+    @course=current_user.courses.paginate(page: params[:page], per_page: 4) if student_logged_in?
   end
 
 
