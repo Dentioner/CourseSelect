@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get :list
       post :list
       get :hint
+      get :table
     end
   end
 

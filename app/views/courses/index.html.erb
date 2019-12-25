@@ -51,6 +51,7 @@
             <% end %>
             </tbody>
           </table>
+          <%= link_to "查看课表", table_courses_path, class: 'btn-sm btn-primary' %>
           <%= will_paginate @course %>
         </div>
       </div>

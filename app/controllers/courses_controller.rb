@@ -106,6 +106,8 @@ class CoursesController < ApplicationController
     redirect_to courses_path, flash: flash
   end
 
+  def table 
+  end
 
   #-------------------------for both teachers and students----------------------
 
