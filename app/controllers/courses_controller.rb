@@ -94,7 +94,23 @@ class CoursesController < ApplicationController
 
   def select
     @course=Course.find_by_id(params[:id])
+    current_user.courses.each do |c|
+        if c.course_time[0..4] == @course.course_time[0..4]
+            flash={:warning => "与已选课程: #{c.name} 时间冲突"}
+            redirect_to list_courses_path, flash: flash
+            return
+        end
+    end
+
     current_user.courses<<@course
+    sc = 0
+    @course.users.each do |u|
+        if !u.teacher and !u.admin
+            sc += 1
+        end
+    end
+    @course.student_num = sc
+    @course.save
     flash={:suceess => "成功选择课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
@@ -102,6 +118,12 @@ class CoursesController < ApplicationController
   def quit
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)
+    sc = 0
+    @course.users.each do |u|
+        if !u.teacher and !u.admin
+            sc += 1
+        end 
+    end
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
