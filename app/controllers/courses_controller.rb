@@ -76,7 +76,7 @@ class CoursesController < ApplicationController
       elsif ctime == "不限" and ctype == "不限" and cname != ""
         @courses = Course.where("open = ? and name like ? and id not in (?)", true, "%#{cname}%", excluded_courses_id).paginate(page: params[:page], per_page: 4)
       elsif ctime != "不限" and ctype != "不限" and cname == ""
-        @courses = Course.where("open = ? and course_time like ? and couse_type = ? and id not in (?)", true, "%#{ctime}%", ctype, excluded_courses_id).paginate(page: params[:page], per_page: 4)
+        @courses = Course.where("open = ? and course_time like ? and course_type = ? and id not in (?)", true, "%#{ctime}%", ctype, excluded_courses_id).paginate(page: params[:page], per_page: 4)
       elsif ctime != "不限" and ctype == "不限" and cname != ""
         @courses = Course.where("open = ? and course_time like ? and name like ? and id not in (?)", true, "%#{ctime}%", "%#{cname}%", excluded_courses_id).paginate(page: params[:page], per_page: 4)
       elsif ctime == "不限" and ctype != "不限" and cname != ""

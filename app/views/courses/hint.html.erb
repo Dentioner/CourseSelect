@@ -59,7 +59,7 @@
                 <% types.each do |type| %>
                   <% grade = 0 %>
                   <% current_user.grades.each do |g| %>
-                    <% if g.course.course_type == type && g.grade != nil %>
+                    <% if g.grade != nil && g.course.course_type == type %>                    
                       <% grade += g.grade %>
                     <% end %>
                   <% end %>
