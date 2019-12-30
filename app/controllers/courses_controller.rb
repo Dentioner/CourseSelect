@@ -94,6 +94,8 @@ class CoursesController < ApplicationController
 
   def select
     @course=Course.find_by_id(params[:id])
+    
+    
     current_user.courses.each do |c|
         if c.course_time[0..4] == @course.course_time[0..4]
             flash={:warning => "与已选课程: #{c.name} 时间冲突"}
