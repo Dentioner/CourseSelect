@@ -96,11 +96,14 @@ class CoursesController < ApplicationController
     @course=Course.find_by_id(params[:id])
     timearr = @course.course_time.split(' ')
     current_user.courses.each do |c|
+      c_timearr = c.course_time.split(' ')
       timearr.each do |ti|
-        if c.course_time[0..4] == ti[0..4]
-            flash={:warning => "与已选课程: #{c.name} 时间冲突"}
-            redirect_to list_courses_path, flash: flash
-            return
+        c_timearr.each do |cti|
+          if cti[0..4] == ti[0..4]
+              flash={:warning => "与已选课程: #{c.name} 时间冲突"}
+              redirect_to list_courses_path, flash: flash
+              return
+          end
         end
       end
     end
