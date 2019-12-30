@@ -94,8 +94,18 @@ class CoursesController < ApplicationController
 
   def select
     @course=Course.find_by_id(params[:id])
-    
-    
+    timearr = @course.course_time.split(' ')
+    current_user.courses.each do |c|
+      timearr.each do |ti|
+        if c.course_time[0..4] == ti[0..4]
+            flash={:warning => "与已选课程: #{c.name} 时间冲突"}
+            redirect_to list_courses_path, flash: flash
+            return
+        end
+      end
+    end
+
+=begin   
     current_user.courses.each do |c|
         if c.course_time[0..4] == @course.course_time[0..4]
             flash={:warning => "与已选课程: #{c.name} 时间冲突"}
@@ -103,7 +113,7 @@ class CoursesController < ApplicationController
             return
         end
     end
-
+=end
     current_user.courses<<@course
     sc = 0
     @course.users.each do |u|
